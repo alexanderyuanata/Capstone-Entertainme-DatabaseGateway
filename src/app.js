@@ -7,12 +7,12 @@ const connection = mysql.createConnection({
   database: 'dataset',
 });
 
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the remote database!');
-});
+async function testFetch() {
+  connection.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to the remote database!');
+  });
 
-function fetchData() {
   const query = 'SELECT * FROM book_dataset LIMIT 1;';
 
   connection.query(query, (err, results) => {
@@ -21,4 +21,4 @@ function fetchData() {
   });
 }
 
-fetchData();
+module.exports = { testFetch, connection };
