@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
   host: '10.184.0.4',
+  port: '3306',
   user: 'cloudrun',
   password: 'password',
   database: 'dataset',
