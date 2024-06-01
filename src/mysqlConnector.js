@@ -11,12 +11,13 @@ const connectionInfo = {
 try {
   console.log('connecting to database...');
   const connection = mysql.createConnection(connectionInfo);
-  console.log('successfully connected to database');
 }
 catch(err){
   console.log('failed to connect to databbase!');
   console.log(err);
 }
+
+executeQuery("select * from book_dataset limit 2;");
 
 
 async function executeQuery(query) {
