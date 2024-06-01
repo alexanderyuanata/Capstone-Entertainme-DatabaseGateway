@@ -8,8 +8,16 @@ const connectionInfo = {
   database: process.env.MYSQLDB || 'dataset',
 };
 
-console.log('connecting to database...');
-const connection = mysql.createConnection(connectionInfo);
+try {
+  console.log('connecting to database...');
+  const connection = mysql.createConnection(connectionInfo);
+  console.log('successfully connected to database');
+}
+catch(err){
+  console.log('failed to connect to databbase!');
+  console.log(err);
+}
+
 
 async function executeQuery(query) {
    //connect to the database
