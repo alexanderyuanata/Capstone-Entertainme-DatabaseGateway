@@ -8,14 +8,9 @@ const connectionInfo = {
   database: process.env.MYSQLDB || 'dataset',
 };
 
-try {
-  console.log('connecting to database...');
-  const connection = mysql.createConnection(connectionInfo);
-}
-catch(err){
-  console.log('failed to connect to databbase!');
-  console.log(err);
-}
+
+console.log('connecting to database...');
+const connection = mysql.createConnection(connectionInfo);
 
 executeQuery("select * from book_dataset limit 2;");
 
