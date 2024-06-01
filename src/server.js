@@ -5,20 +5,21 @@ const app = express();
 //define a handler for queries
 async function handleQuery(req, res){
   //get the query from payload
-  const query = req.body.query;
+  const table = req.query.table;
+  const search = req.query.search;
 
-  console.log(query);
+  console.log(table + '\n' + search);
 
-  if (query == undefined){
+  if (table == undefined || search == undefined){
     return res.status(400).json({
       status: 'failure',
-      message: 'no query detected in request body',
+      message: 'invalid query string parameters',
     });
   }
 
   //retrieve result asynchronously
   try {
-    const result = await executeQuery(query);
+    const result = await executeQuery("SELECT Book FROM book_dataset LIMIT 1;");
 
     return res.status(200).json({
       status: 'success',
