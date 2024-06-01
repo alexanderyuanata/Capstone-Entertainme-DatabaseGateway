@@ -32,7 +32,7 @@ async function executeQuery(query) {
       console.log(err.message);
       throw err;
     }
-
+    console.log(results);
     return results;
   });
 }
