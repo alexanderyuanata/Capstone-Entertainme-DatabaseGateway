@@ -12,7 +12,7 @@ const connectionInfo = {
 console.log('connecting to database...');
 const connection = mysql.createConnection(connectionInfo);
 
-executeQuery("select * from book_dataset limit 2;");
+executeQuery("SELECT * FROM book_dataset LIMIT 2;");
 
 
 async function executeQuery(query) {

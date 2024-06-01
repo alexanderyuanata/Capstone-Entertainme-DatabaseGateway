@@ -5,8 +5,9 @@ const app = express();
 //define a handler for queries
 async function handleQuery(req, res){
   //get the query from payload
-  const payload = req.body;
-  const query = payload.query;
+  const query = req.body.query;
+
+  console.log(query);
 
   if (query == undefined){
     return res.status(400).json({
@@ -32,8 +33,6 @@ async function handleQuery(req, res){
       message: 'something went wrong with the query',
     });
   }
-  
-
 }
 
 //server parses json payload
