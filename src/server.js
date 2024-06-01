@@ -6,11 +6,9 @@ const app = express();
 async function handleQuery(req, res){
   //get the query from payload
   const table = req.query.table;
-  const search = req.query.search;
+  const titles = req.query.title;
 
-  console.log(table + '\n' + search);
-
-  if (table == undefined || search == undefined){
+  if (table == undefined || titles == undefined){
     return res.status(400).json({
       status: 'failure',
       message: 'invalid query string parameters',
@@ -19,7 +17,7 @@ async function handleQuery(req, res){
 
   //retrieve result asynchronously
   try {
-    const result = await executeQuery("SELECT Book FROM book_dataset LIMIT 1;");
+    const result = await executeQuery(titles, table);
 
     return res.status(200).json({
       status: 'success',

@@ -12,10 +12,18 @@ const connectionInfo = {
 console.log('connecting to database...');
 const connection = mysql.createConnection(connectionInfo);
 
-executeQuery("SELECT * FROM book_dataset LIMIT 2;");
+async function executeQuery(criteria, table) {
+  //make sure that the query is appropriate
+  let books;
 
+  if (typeof criteria === 'string') {
+    books = `'${criteria}'`;
+  } else if (Array.isArray(criteria)) {
+    books = `'${criteria.join("', '")}'`;
+  } else {
+      throw new TypeError('Input must be a string or an array of strings');
+  }
 
-async function executeQuery(query) {
    //connect to the database
   connection.connect((error) => {
     if (error){
@@ -25,6 +33,9 @@ async function executeQuery(query) {
 
     console.log('Connected to the remote database!');
   });
+
+  const query = `SELECT * FROM ${table} WHERE Book IN (${books});`;
+  console.log(query);
 
   //if all is good, execute the query and return the result
   connection.query(query, (err, results) => {
