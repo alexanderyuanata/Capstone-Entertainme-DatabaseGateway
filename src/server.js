@@ -1,14 +1,13 @@
 const express = require('express');
-const { executeQuery } = require('./mysqlConnector');
+const { executeBookQuery } = require('./queryHandlers');
 const app = express();
 
 //define a handler for queries
-async function handleQuery(req, res){
+async function handleBookQuery(req, res){
   //get the query from payload
-  const table = req.query.table;
   const titles = req.query.title;
 
-  if (table == undefined || titles == undefined){
+  if (titles == undefined){
     return res.status(400).json({
       status: 'failure',
       message: 'invalid query string parameters',
@@ -17,7 +16,8 @@ async function handleQuery(req, res){
 
   //retrieve result asynchronously
   try {
-    const result = await executeQuery(titles, table);
+    const result = await executeBookQuery(titles);
+    console.log(result);
 
     return res.status(200).json({
       status: 'success',
@@ -27,6 +27,9 @@ async function handleQuery(req, res){
   }
   catch(err){
     //something went wrong
+    console.log('--------------------caught error-----------------------');
+    console.log(err.message);
+
     return res.status(500).json({
       status: 'failure',
       message: 'something went wrong with the query',
@@ -37,16 +40,16 @@ async function handleQuery(req, res){
 //server parses json payload
 app.use(express.json());
 
-//define an endpoint for queries
-app.get('/', (req, res) => {
+//define an endpoint to check whether the server is up or not
+app.get('/check', (req, res) => {
   return res.status(200).json({
     status: 'success',
     message: 'server is up and running!',
   });
 });
 
-//define an endpoint for queries
-app.get('/query', handleQuery);
+//define an endpoint for book queries
+app.get('/query/books', handleBookQuery);
 
 //server listening to requests now
 const port = parseInt(process.env.PORT) || 8080;
