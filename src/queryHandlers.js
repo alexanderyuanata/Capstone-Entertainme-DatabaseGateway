@@ -1,6 +1,6 @@
 const connection = require('./mysqlConnector');
 
-const QUERY_LIMIT = 10;
+const QUERY_LIMIT = 8;
 
 async function executeBookQuery(criteria){
   let books;
