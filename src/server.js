@@ -5,7 +5,7 @@ const app = express();
 //define a handler for queries
 async function handleBookQuery(req, res){
   //get the query from payload
-  const titles = req.query.title;
+  let titles = req.query.title;
 
   if (titles == undefined){
     return res.status(400).json({
@@ -17,12 +17,11 @@ async function handleBookQuery(req, res){
   //retrieve result asynchronously
   try {
     const result = await executeBookQuery(titles);
-    console.log(result);
 
     return res.status(200).json({
       status: 'success',
       message: 'query successfully retrieved',
-      data: result,
+      titles: result,
     });
   }
   catch(err){
@@ -52,7 +51,7 @@ app.get('/check', (req, res) => {
 app.get('/query/books', handleBookQuery);
 
 //server listening to requests now
-const port = parseInt(process.env.PORT) || 8080;
+const port = parseInt(process.env.PORT) || 10600;
 
 async function startServer(){
   //wait until we finish connecting to the database
